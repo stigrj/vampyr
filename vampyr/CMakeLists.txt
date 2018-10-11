@@ -21,39 +21,24 @@ endif()
 link_directories(${STAGED_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR})
 
 # create python module
-add_library(vampyr3d
+add_library(vampyr
   MODULE
-    vampyr3d.cpp
-    bases.cpp
-    project.cpp
+    interface.cpp
   )
 
-target_include_directories(vampyr3d
+target_include_directories(vampyr
   PUBLIC
     $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>
     $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
   )
 
-# This command will become unnecessary, eventually
-target_include_directories(vampyr3d
-  PUBLIC
-    $<BUILD_INTERFACE:${STAGED_INSTALL_PREFIX}/${CMAKE_INSTALL_INCLUDEDIR}>
-    $<BUILD_INTERFACE:${STAGED_INSTALL_PREFIX}/${CMAKE_INSTALL_INCLUDEDIR}/MRCPP>
-  )
-
-add_dependencies(vampyr3d
-  mrcpp_external
-  )
-
-target_link_libraries(vampyr3d
+target_link_libraries(vampyr
   PUBLIC
     pybind11::module
-    Eigen3::Eigen
-    mrcpp
   )
 
-set_target_properties(vampyr3d
+set_target_properties(vampyr
   PROPERTIES
     PREFIX "${PYTHON_MODULE_PREFIX}"
     SUFFIX "${PYTHON_MODULE_EXTENSION}"
@@ -61,7 +46,7 @@ set_target_properties(vampyr3d
 
 install(
   TARGETS
-    vampyr3d
+    vampyr
   ARCHIVE
     DESTINATION ${CMAKE_INSTALL_LIBDIR}
     COMPONENT lib
@@ -69,3 +54,12 @@ install(
     DESTINATION ${CMAKE_INSTALL_LIBDIR}
     COMPONENT lib
   )
+
+add_executable(test_vampyr.x main.cpp)
+target_include_directories(test_vampyr.x
+  PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+  )
+
