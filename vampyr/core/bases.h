@@ -12,6 +12,8 @@
 #include <MRCPP/core/LegendreBasis.h>
 #include <MRCPP/core/ScalingBasis.h>
 
+#include "functions/PyRepresentableFunction.h"
+
 namespace vampyr {
 
 void bases(pybind11::module &m) {
@@ -24,6 +26,12 @@ void bases(pybind11::module &m) {
         .def("getScalingType", &ScalingBasis::getScalingType)
         .def("getScalingOrder", &ScalingBasis::getScalingOrder)
         .def("getQuadratureOrder", &ScalingBasis::getQuadratureOrder)
+        .def("scaling", [](const ScalingBasis &basis, int i, int l, int n) {
+            return ScalingFunction(basis, i, l, n);
+        })
+        .def("wavelet", [](const ScalingBasis &basis, int i, int l, int n) {
+            return WaveletFunction(basis, i, l, n);
+        })
         .def(py::self == py::self)
         .def(py::self != py::self)
         .def("__str__", [](const ScalingBasis &basis) {
