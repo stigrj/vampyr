@@ -68,7 +68,7 @@ endif()
 # download pybind11 if not available on the system
 include(${PROJECT_SOURCE_DIR}/cmake/custom/fetch_pybind11.cmake)
 # download MRCPP if not available on the system
-include(${PROJECT_SOURCE_DIR}/cmake/custom/fetch_mrcpp.cmake)
+include(${PROJECT_SOURCE_DIR}/cmake/custom/fetch_mrchem.cmake)
 include(${PROJECT_SOURCE_DIR}/cmake/custom/main.cmake)
 include(${PROJECT_SOURCE_DIR}/cmake/custom/tests.cmake)
 include(${PROJECT_SOURCE_DIR}/cmake/downloaded/autocmake_save_flags.cmake)
