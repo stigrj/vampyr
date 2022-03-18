@@ -16,6 +16,7 @@ target_include_directories(_vampyr
 target_link_libraries(_vampyr
   PUBLIC
     MRCPP::mrcpp
+    MRChem::mrchem
   )
 
 file(RELATIVE_PATH _rel ${CMAKE_INSTALL_PREFIX}/${PYMOD_INSTALL_FULLDIR} ${CMAKE_INSTALL_PREFIX})

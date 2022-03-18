@@ -24,6 +24,8 @@
 #include "trees/trees.h"
 #include "trees/world.h"
 
+#include "mrchem/orbital.h"
+
 namespace py = pybind11;
 using namespace mrcpp;
 using namespace pybind11::literals;
@@ -51,7 +53,13 @@ template <int D> void bind_advanced(py::module &mod) noexcept {
     advanced_map<D>(sub_mod);
 }
 
-template <int D> void bind_vampyr(py::module &mod) noexcept {
+void bind_mrchem(py::module &mod) noexcept {
+    py::module sub_mod = mod.def_submodule("chem");
+
+    orbitals(sub_mod);
+}
+
+template <int D> void bind_mrcpp(py::module &mod) noexcept {
     std::string name = "vampyr" + std::to_string(D) + "d";
     py::module sub_mod = mod.def_submodule(name.c_str());
 
@@ -90,9 +98,10 @@ PYBIND11_MODULE(_vampyr, m) {
     constants(m);
 
     // Dimension-dependent bindings go into submodules
-    bind_vampyr<1>(m);
-    bind_vampyr<2>(m);
-    bind_vampyr<3>(m);
+    bind_mrcpp<1>(m);
+    bind_mrcpp<2>(m);
+    bind_mrcpp<3>(m);
+    bind_mrchem(m);
     bases(m);
 }
 } // namespace vampyr
